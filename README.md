@@ -2,7 +2,7 @@
 A project to program a self-hosted photo sharing site for the front and back of all the photos in Grandma's shoebox of pictures.
 
 Features to include:
- * Add accounts for all family members. Everyone can add their own photos and view each others.
+ * Add accounts for all family members. Everyone can add their own photos and view each other's.
  * Identifying people in pictures and associating them with a family tree or kinship chart
  * Store the front and back of scanned photos together to preserve hand written notes
  * Adding event names to photos to organize them ("Tiyamike's 14th Birthday", "Julie and Chen's Wedding")
