@@ -1,9 +1,13 @@
 FROM node:22
 
-WORKDIR /opt/app-root-src
+# WORKDIR /opt/app-root-src
+WORKDIR /home/node/app
 
 COPY package.json .
 
 RUN npm install
 
-ENTRYPOINT [ "react-scripts", "start"]
+COPY ./public ./public
+
+ENTRYPOINT [ "npm", "start"]
+# ENTRYPOINT [ "/bin/bash"]

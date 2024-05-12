@@ -2,6 +2,8 @@
 
 # consider using zx instead of bash
 
+docker network create shoe-network > /dev/null 2>&1
+
 if [ ${PWD##*/} == "bin" ]; then
     echo "run this script from project root";
     exit 1;

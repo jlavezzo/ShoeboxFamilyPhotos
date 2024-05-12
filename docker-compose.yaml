@@ -10,7 +10,7 @@ services:
       - ./db/sql/build_db.sql:/var/lib/pgsql/data/sql/build_db.sql
       - ./db/data/:/var/lib/pgsql/data
     ports:
-      -${POSTGRES_PORT}:${POSTGRES_PORT}
+      - 5432:5432
     environment:
       - POSTGRES_PASSWORD=TempS3cret
       - POSTGRES_USER=shoe_admin
@@ -21,15 +21,30 @@ services:
       context: "./api"
       dockerfile: "Dockerfile"
     volumes:
-      - ./api:/opt/app-root/src/api
+      - ./api:/home/node/app
+      # - ./api:/opt/app-root/src/api
+    ports:
+      - 8443:8443
+    env_file:
+      - ./.env
+      - ./.env.local
+    depends_on:
+      - shoe-db
   shoe-client:
     container_name: shoe-client
     build:
       context: "./client"
       dockerfile: "Dockerfile"
+    # volumes:
+    #   - ./client:/opt/app-root/src/api
+    user: "node"
+    # working_dir: /home/node/app
     volumes:
-      - ./client:/opt/app-root/src/api
+      - ./client:/home/node/app
+    ports:
+      - 3000:3000
+    # command: "npm start"
 networks:
   default:
-    name: shoe-networks
+    name: shoe-network
     external: true

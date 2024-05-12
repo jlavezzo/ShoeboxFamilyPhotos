@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "jsx": "react-jsx",
+  },
+  "exclude": ["node_modules", "dist", "../../packages/**-service"]
+}
+  
