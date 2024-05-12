@@ -1,0 +1,2 @@
+#!/bin/bash
+docker exec -it shoe-db bash -c "PGOPTIONS=\"--search_path=public \" psql"

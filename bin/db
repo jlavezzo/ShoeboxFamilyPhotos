@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# consider using zx instead of bash
+
+if [ ${PWD##*/} == "bin" ]; then
+    echo "run this script from project root";
+    exit 1;
+fi
+
+CONT="shoe-db"
+
+echo "!! Resetting the Databse. Ctrl-c to cancel"
+sleep 5
+
+echo "stopping the database container"
+docker compose stop $CONT
+
+echo "Removing the local data directory"
+rm -rf ./db/data/
+
+echo "restarting the database container"
+docker compose up -V -d $CONT
+
+echo "waiting for the db to start"
+sleep 5
+
+echo "Create DB user used by the api"
+docker exec -it $CONT bash -c "pgsql -U postgres -c \"\\i /var/lib/pgsql/data/sql/build_db.sql \" "
+
+# run any other data loading scripts here...
+
+#watch the db until it starts
+RESULT=$(docker exec $CONT bash -c 'psql -tA -c "select 1;"' 2> /dev/null)
+while [[ $RESULT == "" ]]
+do
+    echo "Waiting..."
+    sleep 5
+    RESULT=$(docker exec $CONT bash -c 'psql -tA -c "select 1;"' 2> /dev/null)
+done
+echo "Cool! DB is ready"
+
+sleep 10
+
+echo "touching a file so the api restarts"
+touch api/src/app.js
+
+# now load some test data or something

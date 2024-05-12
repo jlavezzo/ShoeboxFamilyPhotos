@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# consider using zx instead of bash
+
+if [ ${PWD##*/} == "bin" ]; then
+    echo "run this script from project root";
+    exit 1;
+fi
+
+COMPOSE_HTTP_TIMEOUT=180 docker compose up -d

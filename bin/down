@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# consider using zx instead of bash
+
+if [ ${PWD##*/} == "bin" ]; then
+    echo "run this script from project root";
+    exit 1;
+fi
+
+docker compose down
